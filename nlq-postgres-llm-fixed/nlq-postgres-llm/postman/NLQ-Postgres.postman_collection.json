@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "NLQ PostgreSQL LLM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "Age 30-50",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"question\": \"Tell me employee between age 30-50\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/v1/query", "host": ["{{baseUrl}}"], "path": ["api", "v1", "query"] }
+      }
+    },
+    {
+      "name": "Salary greater than 10 Lakh",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"question\": \"Tell me employee having salary greater than 10 Lakh per annum\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/v1/query", "host": ["{{baseUrl}}"], "path": ["api", "v1", "query"] }
+      }
+    },
+    {
+      "name": "Employee count in HR",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"question\": \"Tell me no. of employee present in HR department\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/v1/query", "host": ["{{baseUrl}}"], "path": ["api", "v1", "query"] }
+      }
+    }
+  ]
+}

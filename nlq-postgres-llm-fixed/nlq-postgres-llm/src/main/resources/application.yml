@@ -1,0 +1,113 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: ${DB_PASSWORD:root@123}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  # Route LLM requests through Agent Gateway
+  ai:
+    openai:
+      base-url: http://localhost:4000
+      api-key: local-gateway
+      chat:
+        options:
+          model: llama3.1:8b
+
+    # Configure this only if your AI service uses
+    # Spring AI's MCP client directly.
+    mcp:
+      client:
+        enabled: true
+        type: SYNC
+        request-timeout: 30s
+        streamable-http:
+          connections:
+            agentgateway:
+              url: http://localhost:4000
+
+server:
+  port: 8080
+
+rag:
+  vector-table: nlq_schema_embeddings
+
+lakefs:
+  prompt-prefix: ${LAKEFS_PROMPT_PREFIX:prompts/ddod}
+
+workflow:
+  api:
+    base-url: http://localhost:8081
+
+mcp:
+  block:
+    # Gateway endpoint: confirm the MCP path in gateway config
+    url: ${MCP_BLOCK_URL:http://localhost:4000/mcp}
+
+logging:
+  level:
+    io.agentscope: DEBUG
+    org.springframework.ai.mcp: DEBUG
+    io.modelcontextprotocol: DEBUG
+
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: root@123
+#    driver-class-name: org.postgresql.Driver
+#
+#  flyway:
+#    enabled: true
+#    baseline-on-migrate: true
+#
+##app:
+##  ollama:
+##    base-url: http://localhost:11434
+##    chat-model: llama3.1:8b
+##    embedding-model: nomic-embed-text
+##    temperature: 0.0
+#
+##app:
+##  openai:
+##    api-key: ${OPENAI_API_KEY}
+##    chat-model: gpt-4o-mini
+##    embedding-model: text-embedding-3-small
+#
+#  rag:
+#    vector-table: nlq_schema_embeddings
+#
+#server:
+#  port: 8080
+#
+##  lakefs:
+##    endpoint: ${LAKEFS_ENDPOINT:http://localhost:8001}
+##    access-key: ${LAKEFS_ACCESS_KEY}
+##    secret-key: ${LAKEFS_SECRET_KEY}
+##    repository: ${LAKEFS_REPOSITORY:brain-config}
+##    branch: ${LAKEFS_BRANCH:main}
+#
+#
+#lakefs:
+#  prompt-prefix: ${LAKEFS_PROMPT_PREFIX:prompts/ddod}
+#
+#
+#workflow:
+#  api:
+#    base-url: "http://localhost:8081"
+#
+#mcp:
+#  block:
+#    url: ${MCP_BLOCK_URL:http://localhost:8082/mcp}
+#
+#
+#logging:
+#  level:
+#    io.agentscope: DEBUG
+#    org.springframework.ai.mcp: DEBUG
+#    io.modelcontextprotocol: DEBUG
